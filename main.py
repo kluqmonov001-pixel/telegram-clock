@@ -1,19 +1,28 @@
 from telethon import TelegramClient, functions
-from datetime import datetime
+from telethon.sessions import StringSession
+from datetime import datetime, timezone
 import os
 
 api_id = int(os.environ['API_ID'])
 api_hash = os.environ['API_HASH']
 session = os.environ['SESSION_STRING']
 
-client = TelegramClient('session', api_id, api_hash)
+client = TelegramClient(
+    StringSession(session),
+    api_id,
+    api_hash
+)
 
 async def main():
-    await client.start()
-    current_time = datetime.utcnow().strftime('%H:%M UTC')
+    await client.connect()
+
+    current_time = datetime.now(timezone.utc).strftime('%H:%M UTC')
+
     await client(functions.account.UpdateProfileRequest(
         about=f'🕒 {current_time}'
     ))
+
+    await client.disconnect()
 
 with client:
     client.loop.run_until_complete(main())
