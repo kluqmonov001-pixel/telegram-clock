@@ -1,6 +1,7 @@
 from telethon import TelegramClient, functions
 from telethon.sessions import StringSession
-from datetime import datetime, timezone
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import os
 
 api_id = int(os.environ['API_ID'])
@@ -16,10 +17,10 @@ client = TelegramClient(
 async def main():
     await client.connect()
 
-    current_time = datetime.now(timezone.utc).strftime('%H:%M UTC')
+    current_time = datetime.now(ZoneInfo("Asia/Tashkent")).strftime("%H:%M")
 
     await client(functions.account.UpdateProfileRequest(
-        about=f'🕒 {current_time}'
+        about=f"🕒 {current_time}"
     ))
 
     await client.disconnect()
