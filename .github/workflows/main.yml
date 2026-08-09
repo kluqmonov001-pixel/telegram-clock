@@ -21,12 +21,10 @@ jobs:
       - name: Kutubxonalarni o'rnatish
         run: pip install -r requirements.txt
 
-        - name: Telegram Clock ishga tushirish
-    env:
-      API_ID: ${{ secrets.API_ID }}
-      API_HASH: ${{ secrets.API_HASH }}
-      PHONE: ${{ secrets.PHONE }}
-      SESSION_STRING: ${{ secrets.SESSION_STRING }}
-    run: python main.py
-    
-  
+      - name: Telegram Clock ishga tushirish
+        env:
+          API_ID: ${{ secrets.API_ID }}
+          API_HASH: ${{ secrets.API_HASH }}
+          PHONE: ${{ secrets.PHONE }}
+          SESSION_STRING: ${{ secrets.SESSION_STRING }}
+        run: python main.py
